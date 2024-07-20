@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texto Sentimento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #generatedText {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Texto Gerado</h1>
+    <div id="generatedText">Carregando texto...</div>
+    <script>
+        async function fetchGeneratedText() {
+            const response = await fetch('/api/generated-text');
+            const { text } = await response.json();
+            document.getElementById('generatedText').innerText = text;
+        }
+
+        fetchGeneratedText();
+    </script>
+</body>
+</html>

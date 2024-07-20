@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de Sentimentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: auto;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Compartilhe seu sentimento sobre a palestra</h1>
+    <p>Por favor, insira uma palavra que descreva seu sentimento em relação à palestra e clique em "Enviar".</p>
+    <form id="sentimentForm">
+        <input type="text" id="sentimentInput" placeholder="Digite uma palavra..." required>
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        const form = document.getElementById('sentimentForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const sentiment = document.getElementById('sentimentInput').value;
+            await fetch('/api/sentiment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sentiment }),
+            });
+            document.getElementById('sentimentInput').value = '';
+            alert('Sentimento enviado com sucesso!');
+        });
+    </script>
+</body>
+</html>

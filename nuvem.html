@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuvem de Sentimentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        #wordCloud {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nuvem de Sentimentos</h1>
+    <div id="wordCloud">Nenhuma palavra enviada ainda.</div>
+    <p>Total de palavras enviadas: <span id="wordCount">0</span></p>
+    <button id="generateText">Gerar Texto</button>
+    <script>
+        async function fetchSentiments() {
+            const response = await fetch('/api/sentiments');
+            const sentiments = await response.json();
+            const wordCloud = document.getElementById('wordCloud');
+            wordCloud.innerHTML = sentiments.length ? sentiments.join(', ') : 'Nenhuma palavra enviada ainda.';
+            document.getElementById('wordCount').innerText = sentiments.length;
+        }
+
+        document.getElementById('generateText').addEventListener('click', async () => {
+            await fetch('/api/generate-text', { method: 'POST' });
+            window.location.href = '/sentimento';
+        });
+
+        setInterval(fetchSentiments, 2000);
+    </script>
+</body>
+</html>
